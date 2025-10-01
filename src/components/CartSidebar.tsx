@@ -44,8 +44,8 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
               </div>
             ) : (
               <div className="space-y-6">
-                {items.map((item) => (
-                  <div key={item.id} className="flex gap-4 group">
+                {items.map((item, index) => (
+                  <div key={`${item.id}-${item.size || 'no-size'}-${index}`} className="flex gap-4 group">
                     <Link to={`/product/${item.id}`} onClick={onClose} className="flex-shrink-0">
                       <img
                         src={item.image}
@@ -60,6 +60,11 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                           {item.name}
                         </h3>
                       </Link>
+                      {item.size && (
+                        <p className="text-xs text-muted-foreground mb-1">
+                          Talla: {item.size}
+                        </p>
+                      )}
                       <p className="text-sm text-muted-foreground mb-3">
                         ${item.price.toLocaleString()}
                       </p>
@@ -70,7 +75,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity - 1, item.size)}
                           >
                             <Minus className="h-3 w-3" />
                           </Button>
@@ -79,7 +84,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity + 1, item.size)}
                           >
                             <Plus className="h-3 w-3" />
                           </Button>
@@ -89,7 +94,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                           variant="ghost"
                           size="icon"
                           className="h-8 w-8 text-destructive hover:text-destructive"
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item.id, item.size)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>

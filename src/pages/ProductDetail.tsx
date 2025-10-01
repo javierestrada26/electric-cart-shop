@@ -1,13 +1,23 @@
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useCart } from '@/contexts/CartContext';
 import { products } from '@/data/products';
+import { toast } from '@/hooks/use-toast';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const [selectedSize, setSelectedSize] = useState<string>('');
   
   const product = products.find((p) => p.id === id);
 
@@ -61,11 +71,39 @@ const ProductDetail = () => {
             </p>
 
             <div className="space-y-4 pt-4">
+              {product.sizes && product.sizes.length > 0 && (
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Talla</label>
+                  <Select value={selectedSize} onValueChange={setSelectedSize}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecciona una talla" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {product.sizes.map((size) => (
+                        <SelectItem key={size} value={size}>
+                          {size}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
               <Button
                 variant="cart"
                 size="lg"
                 className="w-full"
-                onClick={() => addToCart(product)}
+                onClick={() => {
+                  if (product.sizes && product.sizes.length > 0 && !selectedSize) {
+                    toast({
+                      title: "Selecciona una talla",
+                      description: "Por favor selecciona una talla antes de agregar al carrito",
+                      variant: "destructive",
+                    });
+                    return;
+                  }
+                  addToCart(product, selectedSize || undefined);
+                }}
               >
                 Agregar al Carrito
               </Button>
