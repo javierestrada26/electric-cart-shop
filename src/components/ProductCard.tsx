@@ -34,13 +34,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         
         <div className="flex items-center justify-between">
           <span className="text-xl font-bold">${product.price.toLocaleString()}</span>
-          <Button
-            variant="shop"
-            size="sm"
-            onClick={() => addToCart(product)}
-          >
-            Agregar
-          </Button>
         </div>
       </div>
     </div>

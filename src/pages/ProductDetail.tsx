@@ -12,12 +12,15 @@ import {
 import { useCart } from '@/contexts/CartContext';
 import { products } from '@/data/products';
 import { toast } from '@/hooks/use-toast';
+import { Navbar } from '@/components/Navbar';
+import { CartSidebar } from '@/components/CartSidebar';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState<string>('');
+  const [isCartOpen, setIsCartOpen] = useState(false);
   
   const product = products.find((p) => p.id === id);
 
@@ -33,7 +36,9 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-16">
+    <div className="min-h-screen bg-background">
+      <Navbar onCartClick={() => setIsCartOpen(true)} />
+      <div className="pt-24 pb-16">
       <div className="container mx-auto px-4">
         <Button
           variant="ghost"
@@ -126,6 +131,8 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      </div>
+      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   );
 };
