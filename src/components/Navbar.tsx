@@ -1,15 +1,12 @@
 import { ShoppingCart } from 'lucide-react';
 import { Button } from './ui/button';
-import { useCart } from '@/contexts/CartContext';
+import { useCart } from '@/hooks/custom/useCart';
 import { Link, useLocation } from 'react-router-dom';
-
-interface NavbarProps {
-  onCartClick: () => void;
-}
+import { NavbarProps } from '@/types';
+import { PRODUCT_CATEGORIES } from '@/constants';
 
 export const Navbar = ({ onCartClick }: NavbarProps) => {
-  const { getTotalItems } = useCart();
-  const itemCount = getTotalItems();
+  const { cartItemCount } = useCart();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const currentCategory = searchParams.get('category');
@@ -23,22 +20,17 @@ export const Navbar = ({ onCartClick }: NavbarProps) => {
           </Link>
           
           <div className="flex items-center gap-6">
-            <Link
-              to="/?category=Accesorios"
-              className={`text-sm font-medium transition-colors hover:text-accent ${
-                currentCategory === 'Accesorios' ? 'text-accent' : 'text-foreground'
-              }`}
-            >
-              Accesorios
-            </Link>
-            <Link
-              to="/?category=Ropa"
-              className={`text-sm font-medium transition-colors hover:text-accent ${
-                currentCategory === 'Ropa' ? 'text-accent' : 'text-foreground'
-              }`}
-            >
-              Ropa
-            </Link>
+            {PRODUCT_CATEGORIES.map((category) => (
+              <Link
+                key={category.key}
+                to={`/?category=${category.key}`}
+                className={`text-sm font-medium transition-colors hover:text-accent ${
+                  currentCategory === category.key ? 'text-accent' : 'text-foreground'
+                }`}
+              >
+                {category.label}
+              </Link>
+            ))}
             
             <Button
               variant="ghost"
@@ -47,9 +39,9 @@ export const Navbar = ({ onCartClick }: NavbarProps) => {
               className="relative"
             >
               <ShoppingCart className="h-5 w-5" />
-              {itemCount > 0 && (
+              {cartItemCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  {itemCount}
+                  {cartItemCount}
                 </span>
               )}
             </Button>

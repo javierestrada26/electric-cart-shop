@@ -1,14 +1,10 @@
-import { Product } from '@/contexts/CartContext';
-import { Button } from './ui/button';
-import { useCart } from '@/contexts/CartContext';
+import { ProductCardProps } from '@/types';
+
+
 import { Link } from 'react-router-dom';
 
-interface ProductCardProps {
-  product: Product;
-}
-
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { addToCart } = useCart();
+
 
   return (
     <div className="group relative bg-card rounded-sm overflow-hidden transition-all duration-300 hover:shadow-lg">

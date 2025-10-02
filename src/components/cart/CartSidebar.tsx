@@ -1,15 +1,40 @@
+import React from 'react';
 import { X, Plus, Minus, Trash2 } from 'lucide-react';
-import { Button } from './ui/button';
-import { useCart } from '@/contexts/CartContext';
+import { Button } from '../ui/button';
+import { useCart, useOrders } from '@/hooks';
 import { Link } from 'react-router-dom';
-
-interface CartSidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+import { CartSidebarProps } from '@/types';
 
 export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
-  const { items, removeFromCart, updateQuantity, clearCart, getTotalPrice } = useCart();
+  const { items, removeFromCart, updateQuantity, clearCart, cartTotal } = useCart();
+  const { createOrder } = useOrders();
+
+  const handleProceedToPayment = async () => {
+    if (items.length === 0) {
+      console.warn("No hay productos en el carrito para procesar.");
+      return;
+    }
+
+    // Datos de ejemplo, en producción vendrían de un formulario
+    const customerData = {
+      name: "Cliente Ejemplo",
+      email: "cliente@ejemplo.com"
+    };
+
+    try {
+      const order = await createOrder(customerData);
+      if (order) {
+        console.log('Orden creada exitosamente:', order);
+        await clearCart();
+        // Aquí podrías mostrar un mensaje de éxito o redirigir
+      } else {
+        console.warn('No se pudo crear la orden.');
+      }
+    } catch (error) {
+      console.error('Error al crear la orden:', error);
+    }
+    onClose();
+  };
 
   return (
     <>
@@ -75,7 +100,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1, item.size)}
+                            onClick={() => updateQuantity(item.cartItemId, item.quantity - 1)}
                           >
                             <Minus className="h-3 w-3" />
                           </Button>
@@ -84,7 +109,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1, item.size)}
+                            onClick={() => updateQuantity(item.cartItemId, item.quantity + 1)}
                           >
                             <Plus className="h-3 w-3" />
                           </Button>
@@ -94,7 +119,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                           variant="ghost"
                           size="icon"
                           className="h-8 w-8 text-destructive hover:text-destructive"
-                          onClick={() => removeFromCart(item.id, item.size)}
+                          onClick={() => removeFromCart(item.cartItemId)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -117,10 +142,15 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
             <div className="border-t border-border p-6 space-y-4">
               <div className="flex justify-between items-center text-lg">
                 <span className="font-semibold">Total:</span>
-                <span className="text-2xl font-bold">${getTotalPrice().toLocaleString()}</span>
+                <span className="text-2xl font-bold">${cartTotal.toLocaleString()}</span>
               </div>
               
-              <Button variant="cart" className="w-full" size="lg">
+              <Button 
+                variant="cart" 
+                className="w-full" 
+                size="lg"
+                onClick={handleProceedToPayment}
+              >
                 Proceder al Pago
               </Button>
               

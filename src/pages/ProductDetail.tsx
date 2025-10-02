@@ -9,18 +9,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useCart } from '@/contexts/CartContext';
+import { useCart } from '@/hooks';
 import { products } from '@/data/products';
-import { toast } from '@/hooks/use-toast';
-import { Navbar } from '@/components/Navbar';
-import { CartSidebar } from '@/components/CartSidebar';
+import { toast } from '@/hooks';
+import { PageLayout } from '@/components';
+import { SHIPPING_INFO, CART_MESSAGES } from '@/constants';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState<string>('');
-  const [isCartOpen, setIsCartOpen] = useState(false);
   
   const product = products.find((p) => p.id === id);
 
@@ -36,9 +35,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar onCartClick={() => setIsCartOpen(true)} />
-      <div className="pt-24 pb-16">
+    <PageLayout>
       <div className="container mx-auto px-4">
         <Button
           variant="ghost"
@@ -101,8 +98,8 @@ const ProductDetail = () => {
                 onClick={() => {
                   if (product.sizes && product.sizes.length > 0 && !selectedSize) {
                     toast({
-                      title: "Selecciona una talla",
-                      description: "Por favor selecciona una talla antes de agregar al carrito",
+                      title: CART_MESSAGES.selectSize,
+                      description: CART_MESSAGES.selectSizeDescription,
                       variant: "destructive",
                     });
                     return;
@@ -116,24 +113,22 @@ const ProductDetail = () => {
               <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Envío</p>
-                  <p className="font-semibold">Gratis</p>
+                  <p className="font-semibold">{SHIPPING_INFO.free}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Entrega</p>
-                  <p className="font-semibold">2-4 días</p>
+                  <p className="font-semibold">{SHIPPING_INFO.delivery}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Garantía</p>
-                  <p className="font-semibold">2 años</p>
+                  <p className="font-semibold">{SHIPPING_INFO.warranty}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
-      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-    </div>
+    </PageLayout>
   );
 };
 

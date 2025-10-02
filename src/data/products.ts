@@ -1,4 +1,4 @@
-import { Product } from '@/contexts/CartContext';
+import { Product } from '@/types';
 import productCharger from '@/assets/product-charger.jpg';
 import productCap from '@/assets/product-cap.jpg';
 import productTshirt from '@/assets/product-tshirt.jpg';

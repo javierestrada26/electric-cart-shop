@@ -1,0 +1,106 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Cargador Inal\u00E1mbrico",
+      "price": 150.0,
+      "image": "/src/assets/product-charger.jpg",
+      "description": "Cargador inal\u00E1mbrico de alta velocidad con dise\u00F1o minimalista y tecnolog\u00EDa de \u00FAltima generaci\u00F3n.",
+      "category": "Accesorios",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Gorra Premium",
+      "price": 45.0,
+      "image": "/src/assets/product-cap.jpg",
+      "description": "Gorra de dise\u00F1o premium con logo bordado y ajuste perfecto. Material de alta calidad.",
+      "category": "Ropa",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Camiseta Tech",
+      "price": 55.0,
+      "image": "/src/assets/product-tshirt.jpg",
+      "description": "Camiseta de algod\u00F3n premium con corte moderno y logo minimalista.",
+      "category": "Ropa",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Botella de Agua",
+      "price": 35.0,
+      "image": "/src/assets/product-bottle.jpg",
+      "description": "Botella t\u00E9rmica de acero inoxidable que mantiene las bebidas fr\u00EDas por 24 horas.",
+      "category": "Accesorios",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Chaqueta Premium",
+      "price": 250.0,
+      "image": "/src/assets/product-jacket.jpg",
+      "description": "Chaqueta de cuero premium con dise\u00F1o elegante y acabados de lujo.",
+      "category": "Ropa",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": 6,
+      "name": "Carrito El\u00E9ctrico",
+      "price": 1500.0,
+      "image": "/src/assets/product-car.jpg",
+      "description": "Carrito el\u00E9ctrico moderno con \u00FAltima tecnolog\u00EDa y dise\u00F1o futurista.",
+      "category": "Veh\u00EDculos",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "cartItems": [],
+  "orders": [],
+  "purchaseLogs": [
+    {
+      "id": 1,
+      "orderNumber": "ORD-20251002-5BDC9D74",
+      "customerEmail": "juan@email.com",
+      "customerName": "Juan P\u00E9rez",
+      "totalAmount": 795.0,
+      "status": "Completed",
+      "purchaseDate": "2025-10-02T15:47:27.1715087Z",
+      "logMessage": "Purchase completed for 2 items. Payment method: Tarjeta de Cr\u00E9dito",
+      "additionalData": "{\u0022ShippingAddress\u0022:\u0022Calle 123, Ciudad\u0022,\u0022PaymentMethod\u0022:\u0022Tarjeta de Cr\\u00E9dito\u0022,\u0022Items\u0022:[{\u0022ProductId\u0022:1,\u0022ProductName\u0022:\u0022Cargador Inal\\u00E1mbrico\u0022,\u0022Quantity\u0022:5,\u0022Price\u0022:150.0,\u0022Size\u0022:null},{\u0022ProductId\u0022:2,\u0022ProductName\u0022:\u0022Gorra Premium\u0022,\u0022Quantity\u0022:1,\u0022Price\u0022:45.0,\u0022Size\u0022:\u0022M\u0022}]}"
+    }
+  ],
+  "counters": {
+    "productId": 7,
+    "cartItemId": 24,
+    "orderId": 1,
+    "purchaseLogId": 2
+  }
+}
